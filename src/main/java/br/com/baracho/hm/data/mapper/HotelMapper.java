@@ -1,6 +1,6 @@
 package br.com.baracho.hm.data.mapper;
 
-import br.com.baracho.hm.core.domain.model.hotel.entities.HotelDomain;
+import br.com.baracho.hm.core.domain.model.entities.HotelDomain;
 import br.com.baracho.hm.data.schema.HotelSchema;
 import org.springframework.stereotype.Component;
 

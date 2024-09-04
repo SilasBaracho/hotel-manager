@@ -1,7 +1,7 @@
 package br.com.baracho.hm.infrastructure.resource.hotel.controller;
 
 import br.com.baracho.hm.core.application.service.hotel.HotelService;
-import br.com.baracho.hm.core.domain.model.hotel.entities.HotelDomain;
+import br.com.baracho.hm.core.domain.model.entities.HotelDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
