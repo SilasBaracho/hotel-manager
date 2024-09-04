@@ -1,32 +1,33 @@
 package br.com.baracho.hm.data.schema;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import br.com.baracho.hm.core.domain.model.enums.BookingStatusEnum;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
+@Builder
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "booking")
 public class BookingSchema {
     @Id
-    @Column(name = "booking")
+    @Column(name = "id_booking")
     private UUID id;
 
     @Column(name = "id_guest")
     private UUID idGuest;
 
-    @Column(name = "id_room")
-    private UUID idRoom;
-
-    @Column(name = "id_hotel")
-    private UUID idHotel;
-
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private BookingStatusEnum status;
 
     @Column(name = "check_in_date")
     private LocalDate checkInDate;
@@ -39,5 +40,13 @@ public class BookingSchema {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "id_room")
+    private RoomSchema roomSchema;
+
+    @ManyToOne
+    @JoinColumn(name = "id_hotel")
+    private HotelSchema hotelSchema;
 }
 

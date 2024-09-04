@@ -9,6 +9,6 @@ CREATE TABLE booking (
     created_at             TIMESTAMP    NOT NULL,
     updated_at             TIMESTAMP    NULL,
     FOREIGN KEY (id_room)  REFERENCES room(id_room),
-    FOREIGN KEY (id_hotel) REFERENCES hotel(id_hotel),
+    FOREIGN KEY (id_hotel) REFERENCES hotel(id_hotel)
 );
 
