@@ -14,33 +14,19 @@ import java.util.UUID;
 public interface RoomRepository extends JpaRepository<RoomSchema, UUID> {
 
     @Query(value = "SELECT r.* FROM room r " +
-            "JOIN hotel h ON r.id_hotel = h.id_hotel " +
-            "JOIN hotel_address ha ON h.id_hotel = ha.id_hotel " +
-            "WHERE LOWER(ha.locale) LIKE LOWER(CONCAT('%', :locale, '%')) " +
-            "AND NOT EXISTS (" +
-            "   SELECT 1 FROM booking gr " +
-            "   WHERE gr.id_room = r.id_room " +
-            "   AND (:check_in_date < gr.check_out_date AND :check_out_date > gr.check_in_date)" +
-            ")",
-            nativeQuery = true
+        "JOIN hotel h ON r.id_hotel = h.id_hotel " +
+        "JOIN hotel_address ha ON h.id_hotel = ha.id_hotel " +
+        "WHERE LOWER(ha.locale) LIKE LOWER(CONCAT('%', ':locale', '%')) " +
+        "AND NOT EXISTS (" +
+        "   SELECT 1 FROM booking gr " +
+        "   WHERE gr.id_room = r.id_room " +
+        "   AND (:check_in_date < gr.check_out_date AND :check_out_date > gr.check_in_date)" +
+        ")",
+        nativeQuery = true
     )
     List<RoomSchema> findRoomsAvailableByLocaleAndDate(
         @Param("locale") String locale,
         @Param("check_in_date") LocalDate checkInDate,
         @Param("check_out_date") LocalDate checkOutDate
     );
-
-//    @Query(value = "SELECT r.* FROM room r " +
-//        "LEFT JOIN booking gr ON r.id_room = gr.id_room " +
-//        "AND (:check_in_date < gr.check_out_date AND :check_out_date > gr.check_in_date) " +
-//        "WHERE r.id_hotel = :idHotel " ,
-//        //"AND r.is_available = TRUE",
-//       nativeQuery = true
-//    )
-//    List<RoomSchema> findRoomsAvailable(
-//        @Param("idHotel") UUID hotelId,
-//        @Param("check_in_date") LocalDate checkInDate,
-//        @Param("check_out_date") LocalDate checkOutDate
-//    );
-
 }
