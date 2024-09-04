@@ -1,4 +1,4 @@
-package br.com.baracho.hm.core.domain.model.hotel.enums;
+package br.com.baracho.hm.core.domain.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
