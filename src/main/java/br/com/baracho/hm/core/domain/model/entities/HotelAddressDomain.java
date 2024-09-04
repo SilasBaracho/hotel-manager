@@ -1,4 +1,4 @@
-package br.com.baracho.hm.core.domain.model.hotel.entities;
+package br.com.baracho.hm.core.domain.model.entities;
 
 import lombok.*;
 
