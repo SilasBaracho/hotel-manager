@@ -25,6 +25,12 @@ public class BookingSchema {
     @Column(name = "id_guest")
     private UUID idGuest;
 
+    @Column(name = "guest_email")
+    private String guestEmail;
+
+    @Column(name = "guest_phone")
+    private String guestPhone;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private BookingStatusEnum status;

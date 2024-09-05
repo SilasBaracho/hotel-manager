@@ -1,11 +1,11 @@
 package br.com.baracho.hm.core.application.service.booking;
 
-import br.com.baracho.hm.core.application.gateway.BookingCreatedPendingProcessingGateway;
+import br.com.baracho.hm.core.application.gateway.BookingCreatedPendingProcessingProducerGateway;
+import br.com.baracho.hm.core.application.repository.booking.FindBookingByIdBookingRepository;
 import br.com.baracho.hm.core.application.repository.booking.FindBookingByIdGuestRepository;
 import br.com.baracho.hm.core.application.repository.booking.SaveBookingRepository;
 import br.com.baracho.hm.core.application.repository.hotel.FindHotelByIdRepository;
 import br.com.baracho.hm.core.application.repository.room.FindRoomByIdRepository;
-import br.com.baracho.hm.core.application.repository.room.SaveRoomRepository;
 import br.com.baracho.hm.core.domain.model.entities.BookingDomain;
 import br.com.baracho.hm.infrastructure.config.exceptionHandler.BadRequestException;
 import br.com.baracho.hm.infrastructure.config.exceptionHandler.NotFoundException;
@@ -16,20 +16,23 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class BookingServiceImpl implements BookingService {
-    private final BookingCreatedPendingProcessingGateway<CreateBookingAvro> bookingCreatedPendingProcessingGateway;
+    private final BookingCreatedPendingProcessingProducerGateway<CreateBookingAvro> bookingCreatedPendingProcessingGateway;
+    private final FindBookingByIdBookingRepository findBookingByIdBookingRepository;
     private final FindBookingByIdGuestRepository findBookingByIdGuestRepository;
     private final FindHotelByIdRepository findHotelByIdRepository;
     private final FindRoomByIdRepository findRoomByIdRepository;
     private final SaveBookingRepository saveBookingRepository;
 
     public BookingServiceImpl(
-        BookingCreatedPendingProcessingGateway<CreateBookingAvro> bookingCreatedPendingProcessingGateway,
+        BookingCreatedPendingProcessingProducerGateway<CreateBookingAvro> bookingCreatedPendingProcessingGateway,
+        FindBookingByIdBookingRepository findBookingByIdBookingRepository,
         FindBookingByIdGuestRepository findBookingByIdGuestRepository,
         FindHotelByIdRepository findHotelByIdRepository,
         FindRoomByIdRepository findRoomByIdRepository,
         SaveBookingRepository saveBookingRepository
     ) {
         this.bookingCreatedPendingProcessingGateway = bookingCreatedPendingProcessingGateway;
+        this.findBookingByIdBookingRepository = findBookingByIdBookingRepository;
         this.findBookingByIdGuestRepository = findBookingByIdGuestRepository;
         this.findHotelByIdRepository = findHotelByIdRepository;
         this.findRoomByIdRepository = findRoomByIdRepository;
@@ -38,7 +41,15 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public BookingDomain createBooking(UUID idRoom, UUID idHotel, UUID idGuest, LocalDate checkIn, LocalDate checkOut) {
+    public BookingDomain createBooking(
+        UUID idRoom,
+        UUID idHotel,
+        UUID idGuest,
+        String guestEmail,
+        String guestPhone,
+        LocalDate checkIn,
+        LocalDate checkOut
+    ) {
         var hotel = findHotelByIdRepository.execute(idHotel)
             .orElseThrow(() -> new NotFoundException("Hotel not found"));
 
@@ -55,6 +66,8 @@ public class BookingServiceImpl implements BookingService {
             .hotelDomain(hotel)
             .roomDomain(room)
             .idGuest(idGuest)
+            .guestEmail(guestEmail)
+            .guestPhone(guestPhone)
             .checkInDate(checkIn)
             .checkOutDate(checkOut)
             .build();
@@ -64,6 +77,16 @@ public class BookingServiceImpl implements BookingService {
         bookingCreatedPendingProcessingGateway.execute(bookingSaved);
 
         return bookingSaved;
+    }
+
+    @Override
+    public BookingDomain processBooking(UUID idBooking) {
+        var booking = findBookingByIdBookingRepository.execute(idBooking)
+            .orElseThrow(() -> new NotFoundException("Booking not found"));
+
+        booking.bookingConfirmed();
+
+        return saveBookingRepository.execute(booking);
     }
 
     @Override

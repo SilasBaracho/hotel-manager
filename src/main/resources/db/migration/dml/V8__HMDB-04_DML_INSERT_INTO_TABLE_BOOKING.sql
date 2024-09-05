@@ -3,6 +3,8 @@ INSERT INTO booking (
     id_guest,
     id_room,
     id_hotel,
+    guest_email,
+    guest_phone,
     status,
     check_in_date,
     check_out_date,
@@ -13,6 +15,8 @@ INSERT INTO booking (
     'a8c3f1b6-bc4f-4b0f-ae3d-8a39d242df39',  -- id_guest
     'ad03597c-a903-4fae-982f-11dd18277edd',  -- id_room
     '2d5c0e4b-444c-44b3-87fd-ba870f877595',  -- id_hotel
+    'test@gmail.com',                        -- guest_email
+    '81012345678',                           -- guest_phone
     'PENDING',                               -- status
     '2024-09-10',                            -- check_in_date
     '2024-09-15',                            -- check_out_date
@@ -23,6 +27,8 @@ INSERT INTO booking (
     'bc940bdb-f776-4336-8b1a-2addeba8378f',  -- id_guest
     'd31a060d-6dca-4775-874e-b68147422265',  -- id_room
     '2d5c0e4b-444c-44b3-87fd-ba870f877595',  -- id_hotel
+    'test@gmail.com',                        -- guest_email
+    '81012345678',                           -- guest_phone
     'PENDING',                               -- status
     '2024-09-10',                            -- check_in_date
     '2024-09-15',                            -- check_out_date

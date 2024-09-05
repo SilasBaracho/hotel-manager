@@ -3,6 +3,8 @@ CREATE TABLE booking (
     id_guest               UUID         NOT NULL,
     id_room                UUID         NOT NULL,
     id_hotel               UUID         NOT NULL,
+    guest_email            VARCHAR(255) NOT NULL,
+    guest_phone            VARCHAR(15)  NOT NULL,
     status                 VARCHAR(50)  NOT NULL,
     check_in_date          DATE         NOT NULL,
     check_out_date         DATE         NOT NULL,

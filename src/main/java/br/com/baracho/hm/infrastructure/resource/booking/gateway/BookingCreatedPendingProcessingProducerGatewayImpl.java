@@ -1,6 +1,6 @@
 package br.com.baracho.hm.infrastructure.resource.booking.gateway;
 
-import br.com.baracho.hm.core.application.gateway.BookingCreatedPendingProcessingGateway;
+import br.com.baracho.hm.core.application.gateway.BookingCreatedPendingProcessingProducerGateway;
 import br.com.baracho.hm.core.domain.model.entities.BookingDomain;
 import br.com.baracho.hm.data.mapper.BookingMapper;
 import br.com.baracho.hm.infrastructure.config.kafka.avro.CreateBookingAvro;
@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Component
-public class BookingCreatedPendingProcessingGatewayImpl implements BookingCreatedPendingProcessingGateway<CreateBookingAvro> {
+public class BookingCreatedPendingProcessingProducerGatewayImpl implements BookingCreatedPendingProcessingProducerGateway<CreateBookingAvro> {
     @Autowired
     private BookingMapper bookingMapper;
     @Autowired

@@ -23,11 +23,17 @@ public class BookingController {
     }
 
     @PostMapping
-    public void createBooking(@RequestBody BookingInput input) {
+    public BookingDomain createBooking(@RequestBody BookingInput input) {
         var booking = bookingService.createBooking(
-            input.getIdRoom(), input.getIdHotel(), input.getIdGuest(), input.getCheckIn(), input.getCheckOut()
+            input.getIdRoom(),
+            input.getIdHotel(),
+            input.getIdGuest(),
+            input.getGuestEmail(),
+            input.getGuestPhone(),
+            input.getCheckIn(),
+            input.getCheckOut()
         );
 
-        //return new BookingDomain();
+        return booking;
     }
 }

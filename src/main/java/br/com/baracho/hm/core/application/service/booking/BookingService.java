@@ -7,7 +7,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BookingService {
-    BookingDomain createBooking(UUID idRoom, UUID idHotel, UUID idGuest, LocalDate checkIn, LocalDate checkOut);
+    BookingDomain createBooking(UUID idRoom, UUID idHotel, UUID idGuest, String guestEmail, String guestPhone,LocalDate checkIn, LocalDate checkOut);
+
+    BookingDomain processBooking(UUID idBooking);
 
     Optional<BookingDomain> findBookingByIdGuest(UUID idGuest);
 }
