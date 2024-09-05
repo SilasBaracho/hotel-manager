@@ -1,5 +1,6 @@
 package br.com.baracho.hm.core.application.service.booking;
 
+import br.com.baracho.hm.core.application.gateway.BookingCreatedPendingProcessingGateway;
 import br.com.baracho.hm.core.application.repository.booking.FindBookingByIdGuestRepository;
 import br.com.baracho.hm.core.application.repository.booking.SaveBookingRepository;
 import br.com.baracho.hm.core.application.repository.hotel.FindHotelByIdRepository;
@@ -8,23 +9,27 @@ import br.com.baracho.hm.core.application.repository.room.SaveRoomRepository;
 import br.com.baracho.hm.core.domain.model.entities.BookingDomain;
 import br.com.baracho.hm.infrastructure.config.exceptionHandler.BadRequestException;
 import br.com.baracho.hm.infrastructure.config.exceptionHandler.NotFoundException;
+import br.com.baracho.hm.infrastructure.config.kafka.avro.CreateBookingAvro;
 
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
 public class BookingServiceImpl implements BookingService {
+    private final BookingCreatedPendingProcessingGateway<CreateBookingAvro> bookingCreatedPendingProcessingGateway;
     private final FindBookingByIdGuestRepository findBookingByIdGuestRepository;
     private final FindHotelByIdRepository findHotelByIdRepository;
     private final FindRoomByIdRepository findRoomByIdRepository;
     private final SaveBookingRepository saveBookingRepository;
 
     public BookingServiceImpl(
+        BookingCreatedPendingProcessingGateway<CreateBookingAvro> bookingCreatedPendingProcessingGateway,
         FindBookingByIdGuestRepository findBookingByIdGuestRepository,
         FindHotelByIdRepository findHotelByIdRepository,
         FindRoomByIdRepository findRoomByIdRepository,
         SaveBookingRepository saveBookingRepository
     ) {
+        this.bookingCreatedPendingProcessingGateway = bookingCreatedPendingProcessingGateway;
         this.findBookingByIdGuestRepository = findBookingByIdGuestRepository;
         this.findHotelByIdRepository = findHotelByIdRepository;
         this.findRoomByIdRepository = findRoomByIdRepository;
@@ -55,6 +60,8 @@ public class BookingServiceImpl implements BookingService {
             .build();
 
         var bookingSaved = saveBookingRepository.execute(booking);
+
+        bookingCreatedPendingProcessingGateway.execute(bookingSaved);
 
         return bookingSaved;
     }

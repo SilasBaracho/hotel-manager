@@ -4,6 +4,7 @@ import br.com.baracho.hm.core.domain.model.entities.BookingDomain;
 import br.com.baracho.hm.core.domain.model.entities.RoomDomain;
 import br.com.baracho.hm.data.schema.BookingSchema;
 import br.com.baracho.hm.data.schema.RoomSchema;
+import br.com.baracho.hm.infrastructure.config.kafka.avro.CreateBookingAvro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
