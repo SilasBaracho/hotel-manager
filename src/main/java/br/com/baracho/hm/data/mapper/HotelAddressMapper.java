@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HotelAddressMapper implements Mapper<HotelAddressDomain, HotelAddressSchema> {
-    @Autowired
-    private HotelMapper hotelMapper;
+    private final HotelMapper hotelMapper = new HotelMapper();
 
     @Override
     public HotelAddressDomain toDomain(HotelAddressSchema hotelAddressSchema) {
