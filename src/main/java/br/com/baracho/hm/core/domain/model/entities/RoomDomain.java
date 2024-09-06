@@ -24,8 +24,6 @@ public class RoomDomain {
 
     private Integer floor;
 
-    private Boolean isAvailable;
-
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -33,7 +31,7 @@ public class RoomDomain {
     private HotelDomain hotelDomain;
 
     @Builder
-    public RoomDomain(UUID id, BigDecimal pricePerNight, RoomTypeEnum roomType, Integer numberGuests, Integer roomNumber, Integer floor, Boolean isAvailable, LocalDateTime createdAt, LocalDateTime updatedAt, HotelDomain hotelDomain) {
+    public RoomDomain(UUID id, BigDecimal pricePerNight, RoomTypeEnum roomType, Integer numberGuests, Integer roomNumber, Integer floor, LocalDateTime createdAt, LocalDateTime updatedAt, HotelDomain hotelDomain) {
         this.id = id != null ? id : UUID.randomUUID();
         this.pricePerNight = pricePerNight;
         this.roomType = roomType;
