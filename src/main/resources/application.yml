@@ -40,3 +40,9 @@ spring:
       properties:
         schema.registry.url: "http://127.0.0.1:8081"
         specific.avro.reader: true
+  thymeleaf:
+    enabled: false
+
+feign:
+  integration:
+    notification-manager: http://localhost:8083/api/v1
