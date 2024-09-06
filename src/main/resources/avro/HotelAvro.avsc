@@ -1,0 +1,14 @@
+[
+  {
+    "type": "record",
+    "name": "CreateBookingAvro",
+    "namespace": "br.com.baracho.hm.infrastructure.config.kafka.avro",
+    "fields": [
+      {
+        "name": "idBooking",
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    ]
+  }
+]

@@ -1,14 +1,13 @@
 package br.com.baracho.hm.data.mapper;
 
-import br.com.baracho.hm.core.domain.model.hotel.entities.RoomDomain;
+import br.com.baracho.hm.core.domain.model.entities.RoomDomain;
 import br.com.baracho.hm.data.schema.RoomSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RoomMapper implements Mapper<RoomDomain, RoomSchema> {
-    @Autowired
-    private HotelMapper hotelMapper;
+    private final HotelMapper hotelMapper = new HotelMapper();
 
     @Override
     public RoomDomain toDomain(RoomSchema roomSchema) {
@@ -19,7 +18,6 @@ public class RoomMapper implements Mapper<RoomDomain, RoomSchema> {
             .numberGuests(roomSchema.getNumberGuests())
             .roomNumber(roomSchema.getRoomNumber())
             .floor(roomSchema.getFloor())
-            .isAvailable(roomSchema.getIsAvailable())
             .createdAt(roomSchema.getCreatedAt())
             .updatedAt(roomSchema.getUpdatedAt())
             .hotelDomain(hotelMapper.toDomain(roomSchema.getHotelSchema()))
@@ -35,7 +33,6 @@ public class RoomMapper implements Mapper<RoomDomain, RoomSchema> {
             .numberGuests(roomDomain.getNumberGuests())
             .roomNumber(roomDomain.getRoomNumber())
             .floor(roomDomain.getFloor())
-            .isAvailable(roomDomain.getIsAvailable())
             .createdAt(roomDomain.getCreatedAt())
             .updatedAt(roomDomain.getUpdatedAt())
             .hotelSchema(hotelMapper.toSchema(roomDomain.getHotelDomain()))

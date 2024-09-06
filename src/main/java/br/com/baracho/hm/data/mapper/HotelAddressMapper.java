@@ -1,14 +1,13 @@
 package br.com.baracho.hm.data.mapper;
 
-import br.com.baracho.hm.core.domain.model.hotel.entities.HotelAddressDomain;
+import br.com.baracho.hm.core.domain.model.entities.HotelAddressDomain;
 import br.com.baracho.hm.data.schema.HotelAddressSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HotelAddressMapper implements Mapper<HotelAddressDomain, HotelAddressSchema> {
-    @Autowired
-    private HotelMapper hotelMapper;
+    private final HotelMapper hotelMapper = new HotelMapper();
 
     @Override
     public HotelAddressDomain toDomain(HotelAddressSchema hotelAddressSchema) {

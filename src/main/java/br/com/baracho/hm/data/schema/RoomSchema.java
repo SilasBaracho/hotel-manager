@@ -1,9 +1,8 @@
 package br.com.baracho.hm.data.schema;
 
-import br.com.baracho.hm.core.domain.model.hotel.enums.RoomTypeEnum;
+import br.com.baracho.hm.core.domain.model.enums.RoomTypeEnum;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -38,9 +37,6 @@ public class RoomSchema {
 
     @Column(name = "floor")
     private Integer floor;
-
-    @Column(name = "is_available")
-    private Integer isAvailable;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
