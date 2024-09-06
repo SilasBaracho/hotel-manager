@@ -3,6 +3,7 @@ package br.com.baracho.hm.core.application.service.booking;
 import br.com.baracho.hm.core.domain.model.entities.BookingDomain;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,5 +12,5 @@ public interface BookingService {
 
     BookingDomain processBooking(UUID idBooking);
 
-    Optional<BookingDomain> findBookingByIdGuest(UUID idGuest);
+    List<BookingDomain> findBookingByIdGuest(UUID idGuest);
 }

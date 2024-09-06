@@ -12,6 +12,7 @@ import br.com.baracho.hm.infrastructure.config.exceptionHandler.NotFoundExceptio
 import br.com.baracho.hm.infrastructure.config.kafka.avro.CreateBookingAvro;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -90,7 +91,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Optional<BookingDomain> findBookingByIdGuest(UUID idGuest) {
-        return findBookingByIdGuestRepository.execute(idGuest);
+    public List<BookingDomain> findBookingByIdGuest(UUID idGuest) {
+        return Optional.of(findBookingByIdGuestRepository.execute(idGuest))
+            .filter(list -> !list.isEmpty())
+            .orElseThrow(() -> new NotFoundException("No bookings found for the given guest ID"));
+        //return findBookingByIdGuestRepository.execute(idGuest);
     }
 }

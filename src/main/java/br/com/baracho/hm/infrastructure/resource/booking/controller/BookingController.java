@@ -4,8 +4,11 @@ import br.com.baracho.hm.core.application.service.booking.BookingService;
 import br.com.baracho.hm.core.domain.model.entities.BookingDomain;
 import br.com.baracho.hm.infrastructure.resource.booking.controller.dto.BookingInput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,14 +19,14 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/{id_guest}")
-    public Optional<BookingDomain> findHotelByLocale(
+    public ResponseEntity<List<BookingDomain>> findHotelByLocale(
         @PathVariable("id_guest") UUID idGuest
     ) {
-        return bookingService.findBookingByIdGuest(idGuest);
+        return new ResponseEntity<>(bookingService.findBookingByIdGuest(idGuest), HttpStatus.OK);
     }
 
     @PostMapping
-    public BookingDomain createBooking(@RequestBody BookingInput input) {
+    public ResponseEntity<BookingDomain> createBooking(@RequestBody BookingInput input) {
         var booking = bookingService.createBooking(
             input.getIdRoom(),
             input.getIdHotel(),
@@ -34,6 +37,6 @@ public class BookingController {
             input.getCheckOut()
         );
 
-        return booking;
+        return new ResponseEntity<>(booking, HttpStatus.CREATED);
     }
 }

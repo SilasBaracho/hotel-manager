@@ -7,8 +7,10 @@ import br.com.baracho.hm.data.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class FindBookingByIdGuestRepositoryImpl implements FindBookingByIdGuestRepository {
@@ -18,7 +20,10 @@ public class FindBookingByIdGuestRepositoryImpl implements FindBookingByIdGuestR
     private BookingRepository bookingRepository;
 
     @Override
-    public Optional<BookingDomain> execute(UUID idGuest) {
-        return bookingRepository.findByIdGuest(idGuest).map(bookingMapper::toDomain);
+    public List<BookingDomain> execute(UUID idGuest) {
+        return bookingRepository.findByIdGuest(idGuest)
+            .stream()
+            .map(bookingMapper::toDomain)
+            .collect(Collectors.toList());
     }
 }
