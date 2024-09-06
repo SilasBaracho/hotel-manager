@@ -22,7 +22,7 @@ public class RoomController {
 
     @GetMapping("/find-room-available")
     public List<RoomDomain> findRoomAvailable(
-        @Param("id_hotel") String locale,
+        @Param("locale") String locale,
         @Param("check_in") LocalDate checkIn,
         @Param("check_out") LocalDate checkOut
     ) {
