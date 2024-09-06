@@ -8,11 +8,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
 public class HotelDomain {
     private UUID id;
 
@@ -25,4 +22,14 @@ public class HotelDomain {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @Builder
+    public HotelDomain(UUID id, String name, LocalTime checkInTime, LocalTime checkOutTime, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id != null ? id : UUID.randomUUID() ;
+        this.name = name;
+        this.checkInTime = checkInTime;
+        this.checkOutTime = checkOutTime;
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+        this.updatedAt = updatedAt;
+    }
 }
