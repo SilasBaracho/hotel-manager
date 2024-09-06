@@ -12,22 +12,9 @@ import java.util.UUID;
 
 @Repository
 public interface HotelRepository extends JpaRepository<HotelSchema, UUID> {
-
-//    @Query("SELECT h FROM Hotel h " +
-//        "WHERE h.availableRooms >= :rooms " +
-//        "AND h.availableGuests >= :guests " +
-//        "AND h.checkInDate <= :checkIn " +
-//        "AND h.checkOutDate >= :checkOut")
-//    List<HotelSchema> findByLocationAndAvailability(
-//        @Param("checkIn") LocalDate checkIn,
-//        @Param("checkOut") LocalDate checkOut,
-//        @Param("rooms") int rooms,
-//        @Param("guests") int guests
-//    );
-
     @Query(value = "SELECT h.* " +
         "FROM hotel h JOIN hotel_address ha ON h.id_hotel = ha.id_hotel " +
-        "WHERE ha.locale = :locale",
+        "WHERE LOWER(ha.locale) LIKE LOWER(CONCAT('%', ':locale', '%')) ",
         nativeQuery = true
     )
     List<HotelSchema> findHotelsByLocale(
